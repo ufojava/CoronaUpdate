@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		036A1806247AE8B1008BE299 /* CountryFile.json in Resources */ = {isa = PBXBuildFile; fileRef = 036A1805247AE8B1008BE299 /* CountryFile.json */; };
 		03B5963424770F3D0018999F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B5963324770F3D0018999F /* AppDelegate.swift */; };
 		03B5963624770F3D0018999F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B5963524770F3D0018999F /* SceneDelegate.swift */; };
 		03B5963824770F3D0018999F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B5963724770F3D0018999F /* ContentView.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		036A1805247AE8B1008BE299 /* CountryFile.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CountryFile.json; sourceTree = "<group>"; };
 		03B5963024770F3D0018999F /* CoronaUpdate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoronaUpdate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03B5963324770F3D0018999F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		03B5963524770F3D0018999F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 		03B5963224770F3D0018999F /* CoronaUpdate */ = {
 			isa = PBXGroup;
 			children = (
+				036A1805247AE8B1008BE299 /* CountryFile.json */,
 				03B5964824770F6A0018999F /* Views */,
 				03B5964724770F570018999F /* Models */,
 				03B5963324770F3D0018999F /* AppDelegate.swift */,
@@ -155,6 +158,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				036A1806247AE8B1008BE299 /* CountryFile.json in Resources */,
 				03B5964024770F3F0018999F /* LaunchScreen.storyboard in Resources */,
 				03B5963D24770F3F0018999F /* Preview Assets.xcassets in Resources */,
 				03B5963A24770F3F0018999F /* Assets.xcassets in Resources */,

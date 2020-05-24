@@ -108,7 +108,7 @@ struct CoronaAPIData: View {
                 
                 //self.coronaCountryDetails.country = "south-africa"
                 //self.countryDetails.country = "south-africa"
-                self.coronStats.country = "nigeria"
+                self.coronStats.country = "senegal"
             
                 
                 self.loadCoronaData { country in
@@ -179,5 +179,45 @@ struct CoronaAPIData: View {
     
     
     
+    
+}
+
+
+//Test struct to list JSON Data
+
+struct TestJSONData: View {
+    
+    @ObservedObject var countries = JsonDataLoader()
+    
+    
+    
+    
+    var body: some View {
+        VStack {
+        
+        Text("Place Holder")
+        
+            List {
+                
+                
+                ForEach(countries.jsonFileData,id: \.code) { country in
+                    
+                    Text(country.name)
+                    
+                    
+                    
+                }
+                
+                
+                
+                
+            }
+            
+            
+            
+        
+        
+    }
+    }
     
 }

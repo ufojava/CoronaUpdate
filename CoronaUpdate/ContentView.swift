@@ -21,7 +21,8 @@ struct ContentView: View {
         
         
         //CoronaView()
-            CoronaAPIData()
+        //CoronaAPIData()
+        TestJSONData()
     }
 }
     
