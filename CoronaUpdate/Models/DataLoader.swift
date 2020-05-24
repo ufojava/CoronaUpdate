@@ -16,6 +16,17 @@
  
  */
 import Foundation
+import SwiftUI
+
+class CountryDetails: ObservableObject {
+    
+    @Published var country = "nigeria"
+    
+    
+    
+}
+
+
 
 //Data Structure
 struct CoronaDataStructure: Codable {
@@ -40,16 +51,26 @@ struct CoronaDataStructure: Codable {
  */
 
 
-class CoronaAPISession {
+struct CoronaAPISession {
+    
+    @ObservedObject var countryDetails = CountryDetails()
+    @EnvironmentObject var coronaCountryDetails: CountryDetails
+    
+    
     
     
     
         //Funciton to process data
         func loadCoronaData(completion: @escaping ([CoronaDataStructure]) -> ()) {
+            
+            //let localCountryDetails = countryDetails.country
+            //let localCountryDetails = coronaCountryDetails.country
+            //let localCoronaDetails = coronaCountryDetails.country
+            
         
         
                 //Declare URL Session
-                guard let url = URL(string: "https://api.covid19api.com/live/country/south-africa/status/confirmed") else {
+            guard let url = URL(string: "https://api.covid19api.com/live/country/\([self.coronaCountryDetails.country])/status/confirmed") else {
                     
                     print("Unable to find URL")
                     return

@@ -9,9 +9,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    
+    //@EnvironmentObject var coronStats: CountryDetails
+    
+
+    
     var body: some View {
-        Text("Hello, World!")
+        
+        NavigationView {
+        
+        
+        //CoronaView()
+            CoronaAPIData()
     }
+}
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
