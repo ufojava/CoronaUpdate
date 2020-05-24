@@ -35,66 +35,10 @@ struct CoronaView: View {
     
     var body: some View {
         
-        VStack {
-        //TextField("Country", text: $updateCountry)
-            Text("\(self.coronStats.country)")
-            //Text("Hello")
-                
-        ///*
-       
-        List {
-            
-            ForEach(countryStats,id: \.Date) { country in
-                
-                VStack {
-                    
-                    
-                    
-                    Text(country.Country)
-                    Text(country.CountryCode)
-                    Text("\(country.Confirmed)")
-                    Text("\(country.Deaths)")
-                    Text("\(country.Recovered)")
-                    Text("\(country.Active)")
-                    Text(country.Date)
-                 
-                
-                    
-                    
-                
-                }
-                
-            }
-            
-            
-            
-            
-            
-        }//End of List
-            .onAppear() {
-                
-                //self.coronaCountryDetails.country = "south-africa"
-                //self.countryDetails.country = "south-africa"
-                //self.coronStats.country = "south-africa"
-            
-                
-                CoronaAPISession().loadCoronaData { country in
-                    
-                    self.countryStats = country
-                    
-                    
-                    
-                    
-                }
-                
-                
-                
-        }//End of Appear
-            
-            //*/
+   Text("Place Holder")
         
         }
-    }
+    
     
 }
 
@@ -114,6 +58,15 @@ struct CoronaView_Previews: PreviewProvider {
 }
 
 struct CoronaAPIData: View {
+    
+    
+    /*API Corona Data
+
+    URL - 'https://api.covid19api.com/all' all Countries no data
+     URL - 'https://api.covid19api.com/live/country/south-africa' by country
+    URL -  'https://api.covid19api.com/live/country/south-africa/status/confirmed' Total
+    URL - https://api.covid19api.com/total/country/south-africa/status/confirmed?from=2020-03-01T00:00:00Z&to=2020-04-01T00:00:00Z
+ */
     
     //Environmental and Observed Obects
     @State private var countryStats: [CoronaDataStructure] = []
