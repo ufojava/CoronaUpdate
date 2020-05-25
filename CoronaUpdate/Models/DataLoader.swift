@@ -18,8 +18,9 @@ class CountryDetails: ObservableObject {
     @Published var country = "nigeria"
     
     //From JSON File
-    @Published var name = ""
-    @Published var code = ""
+    @Published var Country = ""
+    @Published var Slug = ""
+    @Published var ISO2 = ""
     
     
     
@@ -47,8 +48,9 @@ struct CoronaDataStructure: Codable {
 //Data structure from JSON File
 struct CountryJSONStructure: Codable {
     
-    var name: String
-    var code: String
+    var Country: String
+    var Slug: String
+    var ISO2: String
     
 }
 
@@ -60,6 +62,11 @@ public class JsonDataLoader: ObservableObject {
     //Now to initilise
     init() {
         decodeJSONFile()
+      
+        
+
+ 
+        
     }
     
  
@@ -70,7 +77,7 @@ public class JsonDataLoader: ObservableObject {
     func decodeJSONFile() {
         
         //Flle using let to prevent crashes if the file exist
-        if let fileLocation = Bundle.main.url(forResource: "CountryFile", withExtension: "json") {
+        if let fileLocation = Bundle.main.url(forResource: "CountryList", withExtension: "json") {
             
             //Do try catch
             
@@ -101,21 +108,27 @@ public class JsonDataLoader: ObservableObject {
                 
             }
             
-            
+    
+        
             
             
             
         }
         
-        
-        
-        
+      
         
         
     }
     
     
+    
+    
+    
+    
+    
 }
+
+
 
 
 

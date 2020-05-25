@@ -66,16 +66,93 @@ struct CoronaAPIData: View {
      URL - 'https://api.covid19api.com/live/country/south-africa' by country
     URL -  'https://api.covid19api.com/live/country/south-africa/status/confirmed' Total
     URL - https://api.covid19api.com/total/country/south-africa/status/confirmed?from=2020-03-01T00:00:00Z&to=2020-04-01T00:00:00Z
+    URL - https://api.covid19api.com/countries Country List
  */
     
     //Environmental and Observed Obects
     @State private var countryStats: [CoronaDataStructure] = []
     @EnvironmentObject var coronStats: CountryDetails
+    @ObservedObject var countries = JsonDataLoader() //Country List from JSON File
     
-    var body: some View {
+    @State private var inSearchCountry = ""
+    @State private var selectedRow = ""
+    
+    //Check if Insearch is blank
+    @State private var inCountryStatus = false
+    @State private var runCoronaData = false
+    
+    
+    //Function to get countryname
+    func getCountryName() -> some View {
         
         
-        List {
+        
+        
+         
+        
+        
+   return     VStack {
+                   
+            
+              
+                   Form {
+                       
+                    TextField("Enter Country", text: $inSearchCountry)
+                            .autocapitalization(.none)
+                            .disableAutocorrection(true)
+                    
+                    
+                   
+                        
+                    
+                       
+                       List {
+                       
+                       
+                               ForEach(countries.jsonFileData.sorted(by: {$0.Slug < $1.Slug}).filter {$0.Slug .contains(self.inSearchCountry)},id: \.ISO2) { country in
+                                   
+                                   Text(country.Slug)
+                                       .onTapGesture {
+                                           self.selectedRow = country.Slug
+                                        
+                                            
+                                     
+                                        
+                                   }
+                                       
+                                   
+                                   
+                                   
+                                   
+                               }
+                       
+                       }//End of List
+                       
+                       
+                       
+                   }//End of Form
+                   
+
+               
+           }//End of VStack
+        
+        
+         
+        
+        
+        
+    }//End of Get Country Name
+    
+    
+    
+
+    
+    
+    //Function to pull data
+    func getCountryData(inCountry: String) -> some View {
+        
+        
+        return List {
             
             ForEach(countryStats,id: \.Date) { country in
                 
@@ -92,12 +169,9 @@ struct CoronaAPIData: View {
                     Text(country.Date)
                  
                 
-                    
-                    
-                
                 }
                 
-            }
+            }//End ForEach
             
             
             
@@ -106,9 +180,8 @@ struct CoronaAPIData: View {
         }//End of List
             .onAppear() {
                 
-                //self.coronaCountryDetails.country = "south-africa"
-                //self.countryDetails.country = "south-africa"
-                self.coronStats.country = "senegal"
+        
+                self.coronStats.country = inCountry
             
                 
                 self.loadCoronaData { country in
@@ -127,16 +200,85 @@ struct CoronaAPIData: View {
         
         
         
-    }
+        
+        
+    }//End of Function
+    
+    
+
+    
+    var body: some View {
+        VStack {
+            
+            
+            HStack {
+     
+            
+                    Button(action: {
+                        
+                        self.inCountryStatus = true
+                        
+                        
+                        
+                    }) {
+                        
+                        
+                        
+                        Text("Search Country")
+                        
+                        
+                        
+                    }
+                    
+                    if self.inCountryStatus {
+                        
+                        self.getCountryName()
+                        
+                        
+                        
+                    }
+                
+                
+                Button(action: {
+                    
+                    if self.selectedRow != "" {
+                        
+                
+                    self.runCoronaData.toggle()
+                        
+                    }
+                    
+                    self.hideKeyboard()
+                    
+                    
+                }) {
+                    
+                    Text("Get Stats")
+                    
+                    
+                }
+                
+                if self.runCoronaData {
+                    
+                    getCountryData(inCountry: "\(self.selectedRow)")
+                    
+                    
+                    
+                }
+
+            }
+        
+        }
+        
+        
+    }//End of Body
+    
+    
     
     //Funciton to process data
         func loadCoronaData(completion: @escaping ([CoronaDataStructure]) -> ()) {
             
-            //let localCountryDetails = countryDetails.country
-            //let localCountryDetails = coronaCountryDetails.country
-            //let localCoronaDetails = coronaCountryDetails.country
-            
-        
+      
         
                 //Declare URL Session
             guard let url = URL(string: "https://api.covid19api.com/live/country/\(self.coronStats.country)/status/confirmed") else {
@@ -180,7 +322,19 @@ struct CoronaAPIData: View {
     
     
     
+}//End API Struct
+
+#if canImport(UIKit)
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
 }
+#endif
+    
+    
+    
+
 
 
 //Test struct to list JSON Data
@@ -188,26 +342,43 @@ struct CoronaAPIData: View {
 struct TestJSONData: View {
     
     @ObservedObject var countries = JsonDataLoader()
+    @State private var selectedRow = ""
+    @State private var inSearchCountry = ""
+    
+
     
     
     
     
     var body: some View {
         VStack {
+            
+            Text("\(self.selectedRow)")
+            
+            
         
-        Text("Place Holder")
-        
-            List {
+       
+            Form {
+                
+                TextField("Enter Country", text: $inSearchCountry).autocapitalization(.none)
+                
+                List {
                 
                 
-                ForEach(countries.jsonFileData,id: \.code) { country in
+                ForEach(countries.jsonFileData.sorted(by: {$0.Slug < $1.Slug}).filter {$0.Slug .contains(self.inSearchCountry)},id: \.ISO2) { country in
                     
-                    Text(country.name)
+                    Text(country.Slug)
+                        .onTapGesture {
+                            self.selectedRow = country.Slug
+                    }
+                        
+                    
                     
                     
                     
                 }
                 
+                }
                 
                 
                 
