@@ -67,6 +67,8 @@ struct CoronaAPIData: View {
     URL -  'https://api.covid19api.com/live/country/south-africa/status/confirmed' Total
     URL - https://api.covid19api.com/total/country/south-africa/status/confirmed?from=2020-03-01T00:00:00Z&to=2020-04-01T00:00:00Z
     URL - https://api.covid19api.com/countries Country List
+    URL - https://api.covid19api.com/total/country/south-africa - Live
+
  */
     
     //Environmental and Observed Obects
@@ -95,11 +97,12 @@ struct CoronaAPIData: View {
                    
             
               
-                   Form {
+                   //Form {
                        
                     TextField("Enter Country", text: $inSearchCountry)
                             .autocapitalization(.none)
                             .disableAutocorrection(true)
+                            .padding()
                     
                     
                    
@@ -114,6 +117,8 @@ struct CoronaAPIData: View {
                                    Text(country.Slug)
                                        .onTapGesture {
                                            self.selectedRow = country.Slug
+                                        
+                                        
                                         
                                             
                                      
@@ -130,7 +135,7 @@ struct CoronaAPIData: View {
                        
                        
                        
-                   }//End of Form
+                  // }//End of Form
                    
 
                
@@ -156,20 +161,20 @@ struct CoronaAPIData: View {
             
             ForEach(countryStats,id: \.Date) { country in
                 
-                VStack {
+                VStack(alignment: .leading) {
                     
                     
                     
-                    Text(country.Country)
-                    Text(country.CountryCode)
-                    Text("\(country.Confirmed)")
-                    Text("\(country.Deaths)")
-                    Text("\(country.Recovered)")
-                    Text("\(country.Active)")
-                    Text(country.Date)
+                    //Text(country.Country)
+                    //Text(country.CountryCode)
+                    Text("Confirmed: \(country.Confirmed)")
+                    Text("Deaths: \(country.Deaths)").foregroundColor(Color.red)
+                    Text("Recovered: \(country.Recovered)").foregroundColor(Color.green)
+                    Text("Active: \(country.Active)")
+                    Text("Date:\(country.Date)")
                  
                 
-                }
+                }.padding()
                 
             }//End ForEach
             
@@ -211,65 +216,90 @@ struct CoronaAPIData: View {
         VStack {
             
             
-            HStack {
-     
             
-                    Button(action: {
+                        HStack {
+                 
                         
-                        self.inCountryStatus = true
-                        
-                        
-                        
-                    }) {
-                        
-                        
-                        
-                        Text("Search Country")
-                        
-                        
-                        
-                    }
+                                Button(action: {
+                                    
+                                    self.inCountryStatus = true
+                                    
+                                    
+                                    
+                                }) {
+                                    
+                                    
+                                    
+                                    Text("Search Country")
+                                        .frame(width: 130,height:40)
+                                        .background(Color.blue)
+                                        .foregroundColor(Color.yellow)
+                                        .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.black,lineWidth: 1))
+                                               
                     
-                    if self.inCountryStatus {
-                        
-                        self.getCountryName()
-                        
-                        
-                        
-                    }
-                
-                
-                Button(action: {
-                    
-                    if self.selectedRow != "" {
-                        
-                
-                    self.runCoronaData.toggle()
-                        
-                    }
-                    
-                    self.hideKeyboard()
-                    
-                    
-                }) {
-                    
-                    Text("Get Stats")
-                    
-                    
-                }
-                
-                if self.runCoronaData {
-                    
-                    getCountryData(inCountry: "\(self.selectedRow)")
-                    
-                    
-                    
-                }
+                                }
+                                
+                               
+                            
+                            
+                            
+                            Button(action: {
+                                
+                                self.inCountryStatus = false
+                                
+                                if self.selectedRow != "" {
+                                    
+                            
+                                self.runCoronaData.toggle()
+                                    
+                                }
+                                
+                                self.hideKeyboard()
+                                
+                                
+                            }) {
+                                
+                                Text("Get Stats")
+                                    .frame(width: 130,height:40)
+                                    .background(Color.blue)
+                                    .foregroundColor(Color.yellow)
+                                    .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.black,lineWidth: 1))
+                                
+                                
+                            }
+                            
+                           
 
-            }
+                        }//End of HStack
+            Spacer().frame(height:10)
+            
+            Text("Your Selection: \(self.selectedRow.uppercased())")
+           
+            
+            Spacer()
         
-        }
         
+            
+            //Input Country Name
+            if self.inCountryStatus {
+                                               
+               self.getCountryName()
+               
+           }
+            
+            //Show Country Data
+            
+            if self.runCoronaData {
+                                           
+               getCountryData(inCountry: "\(self.selectedRow)")
+               
+               
+               
+           }
+            
+            
+            
+        }//End of VStack
         
     }//End of Body
     
@@ -281,7 +311,7 @@ struct CoronaAPIData: View {
       
         
                 //Declare URL Session
-            guard let url = URL(string: "https://api.covid19api.com/live/country/\(self.coronStats.country)/status/confirmed") else {
+            guard let url = URL(string: "https://api.covid19api.com/total/country/\(self.coronStats.country)") else {
                     
                     print("Unable to find URL")
                     return
