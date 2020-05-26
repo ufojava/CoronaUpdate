@@ -84,6 +84,11 @@ struct CoronaAPIData: View {
     @State private var runCoronaData = false
     
     
+    @State private var showIntroImage = false
+    @State private var showIntroTextOne = false
+    @State private var showIntroTextTwo = false
+    
+    
     //Function to get countryname
     func getCountryName() -> some View {
         
@@ -97,12 +102,15 @@ struct CoronaAPIData: View {
                    
             
               
-                   //Form {
-                       
-                    TextField("Enter Country", text: $inSearchCountry)
-                            .autocapitalization(.none)
-                            .disableAutocorrection(true)
-                            .padding()
+                  
+                        VStack {
+                            TextField("Enter Country", text: $inSearchCountry)
+                                                .autocapitalization(.none)
+                                                .disableAutocorrection(true)
+                                                .padding()
+                            
+                        }
+                            
                     
                     
                    
@@ -213,6 +221,18 @@ struct CoronaAPIData: View {
 
     
     var body: some View {
+        
+        ZStack(alignment: .top) {
+            
+            LinearGradient(gradient: Gradient(colors: [.blue,.white, .pink]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                .frame(width:450,height: 220)
+                .overlay(Rectangle().stroke(Color.black,lineWidth: 2))
+                .shadow(radius: 2)
+                .edgesIgnoringSafeArea(.all)
+            
+            
+        
+        
         VStack {
             
             
@@ -224,17 +244,56 @@ struct CoronaAPIData: View {
                                     
                                     self.inCountryStatus = true
                                     
+                                    if self.showIntroImage {
+                                        
+                                        self.showIntroImage = false
+                                    }
+                                    
+                                    if self.showIntroTextOne {
+                                        
+                                        self.showIntroTextOne = false
+                                    }
+                                    
+                                    if self.showIntroTextTwo {
+                                        
+                                        self.showIntroTextTwo = false
+                                    }
+                                    
                                     
                                     
                                 }) {
                                     
                                     
                                     
-                                    Text("Search Country")
+                                    Text("Input Country")
                                         .frame(width: 130,height:40)
-                                        .background(Color.blue)
-                                        .foregroundColor(Color.yellow)
-                                        .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.black,lineWidth: 1))
+                                        .foregroundColor(Color.red)
+                                        .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.black,lineWidth: 2))
+                                    
+                                    
+                                        .onAppear() {
+                                            
+                                            self.showIntroImage = true
+                                            
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                                
+                                                withAnimation {
+                                                
+                                                self.showIntroTextOne = true
+                                                    
+                                                }
+                                            }
+                                            
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                                
+                                                withAnimation {
+                                                
+                                                self.showIntroTextTwo = true
+                                                }
+                                            }
+                                            
+                                        
+                                    }
                                                
                     
                                 }
@@ -259,11 +318,10 @@ struct CoronaAPIData: View {
                                 
                             }) {
                                 
-                                Text("Get Stats")
+                                Text("Get / Clear Data")
                                     .frame(width: 130,height:40)
-                                    .background(Color.blue)
-                                    .foregroundColor(Color.yellow)
-                                    .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.black,lineWidth: 1))
+                                    .foregroundColor(Color.blue)
+                                    .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.black,lineWidth: 2))
                                 
                                 
                             }
@@ -271,11 +329,48 @@ struct CoronaAPIData: View {
                            
 
                         }//End of HStack
+            
+           
+            
+            
             Spacer().frame(height:10)
             
             Text("Your Selection: \(self.selectedRow.uppercased())")
            
             
+            Spacer()
+            
+         
+            
+            VStack {
+                  
+                if self.showIntroImage {
+                
+                    Text("Covid-19 Global").bold()
+                        .transition(.slide)
+                        .animation(.default)
+                }
+                
+                if self.showIntroTextOne {
+              
+            
+                    Image("Globe1")
+                        .resizable()
+                        .frame(width:300,height: 300)
+                        .scaledToFill()
+                        .transition(.slide)
+                        .animation(.default)
+                }
+                
+                if self.showIntroTextTwo {
+                
+                    Text("Statistics").bold()
+                        .transition(.slide)
+                        .animation(.default)
+                        
+                }
+                
+            }
             Spacer()
         
         
@@ -300,6 +395,9 @@ struct CoronaAPIData: View {
             
             
         }//End of VStack
+            
+            
+        }//End of ZStack
         
     }//End of Body
     
