@@ -88,6 +88,10 @@ struct CoronaAPIData: View {
     @State private var showIntroTextOne = false
     @State private var showIntroTextTwo = false
     
+    var arrayList = [1,2,3,4,5]
+    
+
+    
     
     //Function to get countryname
     func getCountryName() -> some View {
@@ -173,8 +177,6 @@ struct CoronaAPIData: View {
                     
                     
                     
-                    //Text(country.Country)
-                    //Text(country.CountryCode)
                     Text("Confirmed: \(country.Confirmed)")
                     Text("Deaths: \(country.Deaths)").foregroundColor(Color.red)
                     Text("Recovered: \(country.Recovered)").foregroundColor(Color.green)
@@ -242,21 +244,57 @@ struct CoronaAPIData: View {
                         
                                 Button(action: {
                                     
-                                    self.inCountryStatus = true
+                                   
                                     
-                                    if self.showIntroImage {
-                                        
-                                        self.showIntroImage = false
-                                    }
                                     
                                     if self.showIntroTextOne {
                                         
-                                        self.showIntroTextOne = false
+                                        withAnimation {
+                                                                           
+                                            self.showIntroTextOne = false
+                                        }
+                                    }
+                                                                       
+                                    
+                                                                        
+                                    if self.showIntroImage {
+                                        
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                            
+                                            withAnimation {
+                                                
+                                                self.showIntroImage = false
+                                                
+                                            }
+                                            
+                                        }
+                                        
+                                        
                                     }
                                     
+                                    
+                                   
                                     if self.showIntroTextTwo {
                                         
-                                        self.showIntroTextTwo = false
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                            
+                                            
+                                            withAnimation {
+                                                
+                                                self.showIntroTextTwo = false
+                                            }
+                                            
+                                        }
+                                        
+                                        
+                                    }
+                                    
+                                    
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                        
+                                        
+                                         self.inCountryStatus = true
+                                        
                                     }
                                     
                                     
@@ -273,13 +311,14 @@ struct CoronaAPIData: View {
                                     
                                         .onAppear() {
                                             
-                                            self.showIntroImage = true
+                                                self.showIntroTextOne = true
                                             
                                             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                                                 
                                                 withAnimation {
                                                 
-                                                self.showIntroTextOne = true
+                                                
+                                                self.showIntroImage = true
                                                     
                                                 }
                                             }
@@ -344,14 +383,14 @@ struct CoronaAPIData: View {
             
             VStack {
                   
-                if self.showIntroImage {
+                if self.showIntroTextOne {
                 
                     Text("Covid-19 Global").bold()
                         .transition(.slide)
                         .animation(.default)
                 }
                 
-                if self.showIntroTextOne {
+                if self.showIntroImage {
               
             
                     Image("Globe1")
