@@ -76,20 +76,28 @@ struct CoronaAPIData: View {
     @EnvironmentObject var coronStats: CountryDetails
     @ObservedObject var countries = JsonDataLoader() //Country List from JSON File
     
+    
+    //Country Input
     @State private var inSearchCountry = ""
     @State private var selectedRow = ""
+    
+    //Report Selection Input
+    @State private var reportType = ["Summary", "Detailed"]
+    @State private var selectedType = 0
+    
     
     //Check if Insearch is blank
     @State private var inCountryStatus = false
     @State private var runCoronaData = false
     
-    
+    //Show Input Page Holding Image
     @State private var showIntroImage = false
     @State private var showIntroTextOne = false
     @State private var showIntroTextTwo = false
     
-    var arrayList = [1,2,3,4,5]
+
     
+  
 
     
     
@@ -105,21 +113,39 @@ struct CoronaAPIData: View {
    return     VStack {
                    
             
-              
                   
                         VStack {
-                            TextField("Enter Country", text: $inSearchCountry)
-                                                .autocapitalization(.none)
-                                                .disableAutocorrection(true)
-                                                .padding()
                             
-                        }
-                            
-                    
-                    
-                   
                         
+                                
+                                    TextField("Enter Country", text: $inSearchCountry)
+                                        .frame(width:370,height: 30)
+                                                        .autocapitalization(.none)
+                                                        .disableAutocorrection(true)
+                                                        .padding()
+                                        
+                             
+                            //Picker for report type
+                            Picker(selection: $selectedType, label: Text("Type")) {
+                                
+                                ForEach(0..<reportType.count) {
+                                    
+                                    Text(self.reportType[$0])
+                                    
+                                }
+                                
+                            }.pickerStyle(SegmentedPickerStyle())
+                                .frame(height:50)
+                            
                     
+            
+                            
+                            
+                    }//End of VStack
+                    
+ 
+                        
+            VStack(alignment: .leading) {
                        
                        List {
                        
@@ -127,6 +153,7 @@ struct CoronaAPIData: View {
                                ForEach(countries.jsonFileData.sorted(by: {$0.Slug < $1.Slug}).filter {$0.Slug .contains(self.inSearchCountry)},id: \.ISO2) { country in
                                    
                                    Text(country.Slug)
+                    
                                        .onTapGesture {
                                            self.selectedRow = country.Slug
                                         
@@ -146,8 +173,8 @@ struct CoronaAPIData: View {
                        }//End of List
                        
                        
-                       
-                  // }//End of Form
+            }.padding()
+           
                    
 
                
