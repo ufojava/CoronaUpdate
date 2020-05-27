@@ -21,14 +21,7 @@ struct CoronaView: View {
      @ObservedObject var countryDetails = CountryDetails()
     
     
-   //@State private var updateCountry = "nigeria"
-    
-    func updateCountry() {
-        
-        //self.coronCountryDetails = "south-africa"
-        
-        
-    }
+
     
     
     
@@ -246,6 +239,41 @@ struct CoronaAPIData: View {
         
     }//End of Function
     
+    //Function to pull summary infomation
+    func getSummaryReport(inCountry:String) -> some View {
+        
+        let countryFilter = self.countryStats.filter {$0.Country == inCountry}
+        
+  
+        
+        return ForEach(countryFilter,id: \.Date) {data in
+            
+            Text("\(data.Country)")
+            
+            
+        }
+        
+        .onAppear() {
+            
+            self.coronStats.country = inCountry
+                       
+                           
+           self.loadCoronaData { country in
+               
+               self.countryStats = country
+                               
+                               
+                               
+                               
+        }
+            
+            
+            
+            
+        }
+        
+    }
+    
     
 
     
@@ -258,6 +286,53 @@ struct CoronaAPIData: View {
                 .overlay(Rectangle().stroke(Color.black,lineWidth: 2))
                 .shadow(radius: 2)
                 .edgesIgnoringSafeArea(.all)
+            
+            //Introduction - Speech Tutorial
+                .onAppear() {
+                    readText(word: "Welcome to Covid Global Statistics")
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                        
+                        readText(word: "Press Input Country. Type a few letter to reveal the country")
+                        
+                        
+                    }
+                    
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+                                           
+                           readText(word: "Press your selection to confirm country choice")
+                           
+                           
+                       }
+                    
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 14) {
+                                        
+                        readText(word: "Now make report type. Summary or Detailed")
+                        
+                        
+                    }
+                    
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 18) {
+                                        
+                        readText(word: "Now press Get Data to reveal query results.")
+                        
+                        
+                    }
+                    
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 22) {
+                                        
+                        readText(word: "Press get Clear Data to make another selection.")
+                        
+                        
+                    }
+                                       
+                    
+                    
+            }
             
             
         
@@ -450,13 +525,15 @@ struct CoronaAPIData: View {
             
             //Show Country Data
             
-            if self.runCoronaData {
+            if self.runCoronaData && reportType[selectedType] == "Detailed" {
                                            
                getCountryData(inCountry: "\(self.selectedRow)")
+                
                
                
                
-           }
+            }
+            
             
             
             
@@ -534,55 +611,78 @@ extension View {
 //Test struct to list JSON Data
 
 struct TestJSONData: View {
+    @State private var countryStats: [CoronaDataStructure] = []
+    
     
     @ObservedObject var countries = JsonDataLoader()
     @State private var selectedRow = ""
     @State private var inSearchCountry = ""
+    @State private var launchFalcon = false
     
 
     
+    //Function to pull summary infomation
+      func getSummaryReport(inCountry:String) -> some View{
+          
+          let countryFilter = self.countryStats.filter {$0.Country == inCountry}
+          
     
+        /*
+          
+          if let lastElement = countryFilter.last {
+          
+              print(lastElement)
+              
+          
+          }
+        */
+        
+        
+       return ForEach(countryFilter,id: \.Date) { data in
+            
+            Text("\(data.Country)")
+            
+            
+        }
+          
+          
+      }
     
     
     var body: some View {
         VStack {
             
-            Text("\(self.selectedRow)")
-            
-            
-        
-       
-            Form {
+            Button(action: {
                 
-                TextField("Enter Country", text: $inSearchCountry).autocapitalization(.none)
-                
-                List {
+                self.launchFalcon = true
                 
                 
-                ForEach(countries.jsonFileData.sorted(by: {$0.Slug < $1.Slug}).filter {$0.Slug .contains(self.inSearchCountry)},id: \.ISO2) { country in
-                    
-                    Text(country.Slug)
-                        .onTapGesture {
-                            self.selectedRow = country.Slug
-                    }
-                        
-                    
-                    
-                    
-                    
-                }
                 
-                }
+            }) {
+                
+                
+                Text("Print Function")
+                
                 
                 
                 
             }
             
+            if launchFalcon {
+                
+                self.getSummaryReport(inCountry: "ghana")
+                
+            }
             
-            
+        
         
         
     }
+        
+        
+        
+        
+        
     }
     
 }
