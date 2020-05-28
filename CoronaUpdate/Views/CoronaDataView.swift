@@ -89,7 +89,8 @@ struct CoronaAPIData: View {
     @State private var showIntroTextTwo = false
     
 
-    
+    @State private var totaCountryName = ""
+    @State private var totalActiveCases = 0
   
 
     
@@ -239,38 +240,90 @@ struct CoronaAPIData: View {
         
     }//End of Function
     
+    
+    
+    
     //Function to pull summary infomation
     func getSummaryReport(inCountry:String) -> some View {
         
-        let countryFilter = self.countryStats.filter {$0.Country == inCountry}
+        //let countryFilter = (self.countryStats.filter {$0.Country == inCountry}).count
+        //let countryLastRecord = countryFilter.last
         
-  
+       
         
-        return ForEach(countryFilter,id: \.Date) {data in
+        
+        
+        
+        return  VStack {
             
-            Text("\(data.Country)")
+            Text("Total Figures")
+        
+       
             
-            
+            Text("total number: \(self.totaCountryName)")
+            Text("Total cases: \(self.totalActiveCases)")
+            Spacer()
+                
         }
-        
-        .onAppear() {
+            /*
             
-            self.coronStats.country = inCountry
-                       
-                           
-           self.loadCoronaData { country in
+            List {
+            
+            ForEach(countryStats,id: \.Date) { country in
+                
+                VStack(alignment: .leading) {
+                    
+                    
+                    
+                    Text("Confirmed: \(country.Confirmed)")
+                    Text("Deaths: \(country.Deaths)").foregroundColor(Color.red)
+                    Text("Recovered: \(country.Recovered)").foregroundColor(Color.green)
+                    Text("Active: \(country.Active)")
+                    Text("Date:\(country.Date)")
+                    
+                    Text("total number: \(self.totaCountryName)")
+                    Text("Total cases: \(self.totalActiveCases)")
+                 
+                
+                }.padding()
+                
+                
+                
+            }//End ForEach
+            
+            
+            
+            
+            
+        }//End of List
+ */
+            .onAppear() {
+                
                
-               self.countryStats = country
-                               
-                               
-                               
-                               
-        }
+        
+                self.coronStats.country = inCountry
             
+                
+                self.loadCoronaData { country in
+                    
+                    self.countryStats = country
+                    
+                    self.totaCountryName = self.countryStats.last?.Country ?? "nil"
+                    self.totalActiveCases = self.countryStats.last?.Active ?? 0
+                    
+                    
+                }
+                
+                
+                
+        }//End of Appear
+        
+        
+            //Text("\(countryLastRecord?.Confirmed ?? 0)")
             
-            
-            
-        }
+    
+        //GET THE THE DATA AND ASSIGN THE COUNTRY SEARCH TO THE EQUIVALENT IN THE API RECORD********
+        
         
     }
     
@@ -286,7 +339,7 @@ struct CoronaAPIData: View {
                 .overlay(Rectangle().stroke(Color.black,lineWidth: 2))
                 .shadow(radius: 2)
                 .edgesIgnoringSafeArea(.all)
-            
+            /*
             //Introduction - Speech Tutorial
                 .onAppear() {
                     readText(word: "Welcome to Covid Global Statistics")
@@ -332,9 +385,9 @@ struct CoronaAPIData: View {
                                        
                     
                     
-            }
+            }//End of OnAppear
             
-            
+           */
         
         
         VStack {
@@ -527,7 +580,10 @@ struct CoronaAPIData: View {
             
             if self.runCoronaData && reportType[selectedType] == "Detailed" {
                                            
-               getCountryData(inCountry: "\(self.selectedRow)")
+               //getCountryData(inCountry: "\(self.selectedRow)")
+                
+                //Summary Test
+                getSummaryReport(inCountry: "\(self.selectedRow)")
                 
                
                
@@ -611,77 +667,52 @@ extension View {
 //Test struct to list JSON Data
 
 struct TestJSONData: View {
-    @State private var countryStats: [CoronaDataStructure] = []
+   
+    @State private var lastElement = ["One","Two","Three","Four","Five"]
+    @State private var showElement = false
     
     
-    @ObservedObject var countries = JsonDataLoader()
-    @State private var selectedRow = ""
-    @State private var inSearchCountry = ""
-    @State private var launchFalcon = false
-    
-
-    
-    //Function to pull summary infomation
-      func getSummaryReport(inCountry:String) -> some View{
-          
-          let countryFilter = self.countryStats.filter {$0.Country == inCountry}
-          
-    
-        /*
-          
-          if let lastElement = countryFilter.last {
-          
-              print(lastElement)
-              
-          
-          }
-        */
+    //Function to five me the last value
+    func lastWord() -> some View {
         
         
-       return ForEach(countryFilter,id: \.Date) { data in
-            
-            Text("\(data.Country)")
-            
-            
-        }
-          
-          
-      }
-    
-    
-    var body: some View {
-        VStack {
-            
-            Button(action: {
-                
-                self.launchFalcon = true
-                
-                
-                
-            }) {
-                
-                
-                Text("Print Function")
-                
-                
-                
-                
-            }
-            
-            if launchFalcon {
-                
-                self.getSummaryReport(inCountry: "ghana")
-                
-            }
-            
+        let lastValueinArray = lastElement.last
         
+        //print(lastValueinArray as Any)
+        
+        return Text("\(lastValueinArray ?? "nil")")
         
         
     }
+    
+    
+    
+    var body: some View {
+        
+        VStack {
+            
+           
+            Text("Place Holder")
+            
+                .onAppear() {
+                    
+                    self.showElement = true
+                    
+                    //self.lastWord()
+                    
+            }
+            
+            if self.showElement {
+                
+                self.lastWord()
+                
+            }
+            
+            
         
         
         
-        
+        }
         
     }
     
