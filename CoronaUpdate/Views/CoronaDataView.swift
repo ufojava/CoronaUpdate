@@ -89,8 +89,13 @@ struct CoronaAPIData: View {
     @State private var showIntroTextTwo = false
     
 
+    //Country Summary
     @State private var totaCountryName = ""
+    @State private var totalConfirmedCases = 0
+    @State private var totalDeaths = 0
+    @State private var totalRecovered = 0
     @State private var totalActiveCases = 0
+    @State private var totalDate = ""
   
 
     
@@ -246,57 +251,100 @@ struct CoronaAPIData: View {
     //Function to pull summary infomation
     func getSummaryReport(inCountry:String) -> some View {
         
-        //let countryFilter = (self.countryStats.filter {$0.Country == inCountry}).count
-        //let countryLastRecord = countryFilter.last
-        
-       
-        
-        
+  
         
         
         return  VStack {
             
-            Text("Total Figures")
         
-       
+            Text("Total \(self.totaCountryName) Figures")
+                .font(.custom("Cochin", size: 25))
+                .foregroundColor(Color.yellow)
             
-            Text("total number: \(self.totaCountryName)")
-            Text("Total cases: \(self.totalActiveCases)")
+            Spacer().frame(height:50)
+        
+            Group {
+                HStack {
+                    Capsule()
+                        .frame(width:50,height: 5)
+                        .foregroundColor(Color.blue)
+                    
+                    Capsule()
+                    .frame(width:50,height: 5)
+                    .foregroundColor(Color.green)
+                    
+                    Capsule()
+                    .frame(width:50,height: 5)
+                    .foregroundColor(Color.red)
+                    
+                    Capsule()
+                    .frame(width:50,height: 5)
+                    .foregroundColor(Color.purple)
+                    
+                    Capsule()
+                    .frame(width:50,height: 5)
+                    .foregroundColor(Color.orange)
+                }
+                
+                Spacer().frame(height:20)
+                
+                Text("Total Confirmed: \(self.totalConfirmedCases)")
+                Text("Total Cases: \(self.totalActiveCases)")
+                Text("Total Deaths:\(self.totalDeaths)").foregroundColor(Color.red)
+                Text("Total Recovered: \(self.totalRecovered)").foregroundColor(Color.green)
+                Text("Date: \(self.totalDate)")
+            
+            Spacer().frame(height:20)
+            }
+            
+            VStack {
+                
+                
+                HStack {
+                    Capsule()
+                        .frame(width:50,height: 5)
+                        .foregroundColor(Color.blue)
+                    
+                    Capsule()
+                    .frame(width:50,height: 5)
+                    .foregroundColor(Color.green)
+                    
+                    Capsule()
+                    .frame(width:50,height: 5)
+                    .foregroundColor(Color.red)
+                    
+                    Capsule()
+                    .frame(width:50,height: 5)
+                    .foregroundColor(Color.purple)
+                    
+                    Capsule()
+                    .frame(width:50,height: 5)
+                    .foregroundColor(Color.orange)
+                }
+                
+                
+                
+                
+            }//End of VStack
+            
+            Spacer().frame(height:90)
+            
+            VStack {
+                
+                Text("Credits:")
+                
+                Text("Data Provided By Covid19 API")
+                Text("http://covid19api.com")
+                Text("API: https://api.covid19api.com/total/country/")
+                
+                
+            }
+            .font(.system(.footnote))
+            
             Spacer()
                 
-        }
-            /*
+        }//End HStack
             
-            List {
-            
-            ForEach(countryStats,id: \.Date) { country in
-                
-                VStack(alignment: .leading) {
-                    
-                    
-                    
-                    Text("Confirmed: \(country.Confirmed)")
-                    Text("Deaths: \(country.Deaths)").foregroundColor(Color.red)
-                    Text("Recovered: \(country.Recovered)").foregroundColor(Color.green)
-                    Text("Active: \(country.Active)")
-                    Text("Date:\(country.Date)")
-                    
-                    Text("total number: \(self.totaCountryName)")
-                    Text("Total cases: \(self.totalActiveCases)")
-                 
-                
-                }.padding()
-                
-                
-                
-            }//End ForEach
-            
-            
-            
-            
-            
-        }//End of List
- */
             .onAppear() {
                 
                
@@ -309,7 +357,11 @@ struct CoronaAPIData: View {
                     self.countryStats = country
                     
                     self.totaCountryName = self.countryStats.last?.Country ?? "nil"
+                    self.totalConfirmedCases = self.countryStats.last?.Confirmed ?? 0
+                    self.totalDeaths = self.countryStats.last?.Deaths ?? 0
+                    self.totalRecovered = self.countryStats.last?.Recovered ?? 0
                     self.totalActiveCases = self.countryStats.last?.Active ?? 0
+                    self.totalDate = self.countryStats.last?.Date ?? "nil"
                     
                     
                 }
@@ -319,13 +371,15 @@ struct CoronaAPIData: View {
         }//End of Appear
         
         
-            //Text("\(countryLastRecord?.Confirmed ?? 0)")
+        
             
     
-        //GET THE THE DATA AND ASSIGN THE COUNTRY SEARCH TO THE EQUIVALENT IN THE API RECORD********
         
         
-    }
+        
+    }//End of Function
+    
+    
     
     
 
@@ -576,18 +630,18 @@ struct CoronaAPIData: View {
                
            }
             
-            //Show Country Data
+            //Show Country Detailed
             
             if self.runCoronaData && reportType[selectedType] == "Detailed" {
                                            
-               //getCountryData(inCountry: "\(self.selectedRow)")
+               getCountryData(inCountry: "\(self.selectedRow)")
                 
                 //Summary Test
+               
+            } else if runCoronaData && reportType[selectedType] == "Summary" {
+                
                 getSummaryReport(inCountry: "\(self.selectedRow)")
                 
-               
-               
-               
             }
             
             
