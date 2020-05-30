@@ -87,7 +87,12 @@ struct CoronaAPIData: View {
     @State private var totalRecovered = 0
     @State private var totalActiveCases = 0
     @State private var totalDate = ""
-  
+    
+    //Loading Status
+    @State private var showLoading = false
+    //@State private var showNewSearchInstruction = false
+    @State private var newSearchMessage = ""
+    
 
     
     
@@ -148,15 +153,10 @@ struct CoronaAPIData: View {
                                            self.selectedRow = country.Slug
                                         
                                         
-                                        
-                                            
-                                     
-                                        
+                                                             
                                    }
                                        
-                                   
-                                   
-                                   
+                   
                                    
                                }
                        
@@ -443,6 +443,16 @@ struct CoronaAPIData: View {
                         
                                 Button(action: {
                                     
+                                    
+                                    self.newSearchMessage = "Loading"
+                                    if self.showLoading {
+                                        
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                        
+                                        self.showLoading.toggle()
+                                        }
+                                    }
+                                    
                                    
                                     
                                     
@@ -510,7 +520,9 @@ struct CoronaAPIData: View {
                                     
                                         .onAppear() {
                                             
+                                            
                                                 self.showIntroTextOne = true
+                                                
                                             
                                             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                                                 
@@ -527,6 +539,7 @@ struct CoronaAPIData: View {
                                                 withAnimation {
                                                 
                                                 self.showIntroTextTwo = true
+                                                    
                                                 }
                                             }
                                             
@@ -542,6 +555,7 @@ struct CoronaAPIData: View {
                             
                             Button(action: {
                                 
+                                
                                 self.inCountryStatus = false
                                 
                                 if self.selectedRow != "" {
@@ -549,6 +563,15 @@ struct CoronaAPIData: View {
                             
                                 self.runCoronaData.toggle()
                                     
+                                }
+                                
+                                if self.runCoronaData == false && self.selectedRow != "" {
+                                    
+                                    withAnimation {
+                                    
+                                        self.showLoading.toggle()
+                                        self.newSearchMessage = "Click Input Country"
+                                    }
                                 }
                                 
                                 self.hideKeyboard()
@@ -574,6 +597,7 @@ struct CoronaAPIData: View {
             Spacer().frame(height:10)
             
             Text("Your Selection: \(self.selectedRow.uppercased())")
+                .foregroundColor(Color.purple)
            
             
             Spacer()
@@ -581,12 +605,16 @@ struct CoronaAPIData: View {
          
             
             VStack {
+                
+             
                   
                 if self.showIntroTextOne {
                 
                     Text("Covid-19 Global").bold()
                         .transition(.slide)
                         .animation(.default)
+                    
+            
                 }
                 
                 if self.showIntroImage {
@@ -598,6 +626,27 @@ struct CoronaAPIData: View {
                         .scaledToFill()
                         .transition(.slide)
                         .animation(.default)
+                }
+                
+                if self.showLoading {
+                    
+                    VStack {
+                        
+                        Text("\(self.newSearchMessage)")
+                                .foregroundColor(Color.red)
+                                .font(.custom("Chalkboard", size: 25))
+                                
+                                Spacer().frame(height:20)
+                            
+                            Image("Loading")
+                                .resizable()
+                                .frame(width:90,height: 180)
+                                .scaledToFill()
+                                
+                    }
+                    .transition(.slide)
+                    .animation(.default)
+                    
                 }
                 
                 if self.showIntroTextTwo {
@@ -638,6 +687,8 @@ struct CoronaAPIData: View {
             
             
         }//End of VStack
+            
+          
             
             
         }//End of ZStack
