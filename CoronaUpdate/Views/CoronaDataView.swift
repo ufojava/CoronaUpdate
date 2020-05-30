@@ -14,21 +14,12 @@ import SwiftUI
 
 struct CoronaView: View {
     
-    //Assign loaded Data to State variable
-    @State private var countryStats: [CoronaDataStructure] = []
-    @EnvironmentObject var coronStats: CountryDetails
-    
-     @ObservedObject var countryDetails = CountryDetails()
-    
-    
 
-    
-    
-    
+   
     
     var body: some View {
         
-   Text("Place Holder")
+        CoronaAPIData()
         
         }
     
@@ -251,7 +242,6 @@ struct CoronaAPIData: View {
     //Function to pull summary infomation
     func getSummaryReport(inCountry:String) -> some View {
         
-  
         
         
         return  VStack {

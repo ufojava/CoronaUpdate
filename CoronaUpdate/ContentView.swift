@@ -11,19 +11,71 @@ import SwiftUI
 struct ContentView: View {
     
     
-    //@EnvironmentObject var coronStats: CountryDetails
+   
     
 
     
     var body: some View {
         
         NavigationView {
+                
+            ZStack(alignment: .top) {
+            
+                LinearGradient(gradient: Gradient(colors: [.blue,.white,.pink]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                    .edgesIgnoringSafeArea(.all)
+                
+                
+                
+                VStack {
+                    
+                    Spacer().frame(height:50)
+                    
+                    Text("Covid-19 Country Data")
+                        .foregroundColor(Color.pink)
+                        .font(.custom("Chalkboard", size: 25))
+                    Spacer().frame(height:50)
+                    
+                    
+                        //Insert Flower Image
+                    HStack {
+                        Spacer().frame(width:50)
+                        Image("FrontImage")
+                            .resizable()
+                            .frame(width:200,height: 200)
+                            .scaledToFill()
+                    }
+                    
+                    Spacer().frame(height:100)
+                    
+                        NavigationLink(destination: CoronaView()) {
+                            
+                            
+                            Text("Begin")
+                                .foregroundColor(Color.blue)
+                                .font(.custom("Chalkboard", size: 20))
+                                
+                                .frame(width:120,height: 30)
+                                .overlay(RoundedRectangle(cornerRadius: 5).stroke(Color.black,lineWidth: 1))
+                              
+                                
+                        }
+                    Spacer()
+                    
+                    Text("Developed by: UfoSoft").font(.footnote)
+                        .foregroundColor(Color.init(red: 0.2, green: 0.6, blue: 0.4))
+                    Text("Web: https://ufookoro.wixsite.com/website").font(.footnote)
+                    .foregroundColor(Color.init(red: 0.2, green: 0.6, blue: 0.4))
+                    
+                }
+                Spacer()
+                
+                    
         
-        
-        //CoronaView()
-        CoronaAPIData()
-        //TestJSONData()
-    }
+        //Navigation Bar Title
+        .navigationBarTitle(Text("Home 🏚" ))
+       
+    }//End of ZStack
+        }
 }
     
 }
