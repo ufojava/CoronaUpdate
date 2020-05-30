@@ -22,7 +22,7 @@
 /* Begin PBXFileReference section */
 		036A1809247BAA68008BE299 /* CountryList.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CountryList.json; sourceTree = "<group>"; };
 		036A180F247ED697008BE299 /* SpeakCovid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakCovid.swift; sourceTree = "<group>"; };
-		03B5963024770F3D0018999F /* CoronaUpdate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoronaUpdate.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		03B5963024770F3D0018999F /* Stats Covid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Stats Covid.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03B5963324770F3D0018999F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		03B5963524770F3D0018999F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		03B5963724770F3D0018999F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -56,7 +56,7 @@
 		03B5963124770F3D0018999F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				03B5963024770F3D0018999F /* CoronaUpdate.app */,
+				03B5963024770F3D0018999F /* Stats Covid.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -120,7 +120,7 @@
 			);
 			name = CoronaUpdate;
 			productName = CoronaUpdate;
-			productReference = 03B5963024770F3D0018999F /* CoronaUpdate.app */;
+			productReference = 03B5963024770F3D0018999F /* Stats Covid.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -326,7 +326,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "ufookoro-me.com.CoronaUpdate";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Stats Covid";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -346,7 +346,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "ufookoro-me.com.CoronaUpdate";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Stats Covid";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

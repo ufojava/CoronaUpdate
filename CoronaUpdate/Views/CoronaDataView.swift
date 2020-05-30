@@ -597,7 +597,7 @@ struct CoronaAPIData: View {
             Spacer().frame(height:10)
             
             Text("Your Selection: \(self.selectedRow.uppercased())")
-                .foregroundColor(Color.purple)
+                .foregroundColor(Color.blue)
            
             
             Spacer()
