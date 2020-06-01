@@ -61,6 +61,12 @@ struct ContentView: View {
                         }
                     Spacer()
                     
+                    NavigationLink(destination: Tutorial()) {
+                        
+                        Text("Help 🛠")
+                        
+                    }
+                    
                     Text("Developed by: UfoSoft").font(.footnote)
                         .foregroundColor(Color.init(red: 0.2, green: 0.6, blue: 0.4))
                     Text("Web: https://ufookoro.wixsite.com/website").font(.footnote)

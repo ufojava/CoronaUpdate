@@ -317,6 +317,7 @@ struct CoronaAPIData: View {
                 
             }//End of VStack
             
+            
             Spacer().frame(height:90)
             
             VStack {
@@ -328,8 +329,15 @@ struct CoronaAPIData: View {
                 Text("API: https://api.covid19api.com/total/country/")
                 
                 
+                
+                
+                
+                
+                
             }
             .font(.system(.footnote))
+            
+          
             
             Spacer()
                 
@@ -383,55 +391,7 @@ struct CoronaAPIData: View {
                 .overlay(Rectangle().stroke(Color.black,lineWidth: 2))
                 .shadow(radius: 2)
                 .edgesIgnoringSafeArea(.all)
-            /*
-            //Introduction - Speech Tutorial
-                .onAppear() {
-                    readText(word: "Welcome to Covid Global Statistics")
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-                        
-                        readText(word: "Press Input Country. Type a few letter to reveal the country")
-                        
-                        
-                    }
-                    
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
-                                           
-                           readText(word: "Press your selection to confirm country choice")
-                           
-                           
-                       }
-                    
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 14) {
-                                        
-                        readText(word: "Now make report type. Summary or Detailed")
-                        
-                        
-                    }
-                    
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 18) {
-                                        
-                        readText(word: "Now press Get Data to reveal query results.")
-                        
-                        
-                    }
-                    
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 22) {
-                                        
-                        readText(word: "Press get Clear Data to make another selection.")
-                        
-                        
-                    }
-                                       
-                    
-                    
-            }//End of OnAppear
-            
-           */
+   
         
         
         VStack {
